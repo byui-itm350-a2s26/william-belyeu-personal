@@ -1,6 +1,5 @@
 name: Create Build Pipeline
 
-# 1. Triggers a pull request closed on main
 on:
   pull_request:
     branches:
@@ -10,45 +9,35 @@ on:
 
 jobs:
   build-and-deploy:
-    # 2. Job only runs if the pull request is merged
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest # 3. Ensure the runs-on image has npm (Ubuntu has it natively)
+    runs-on: ubuntu-latest
 
     steps:
-      # 4. Checks out the repo
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 5. Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      # 6. Runs install commands
       - name: Install Dependencies
-        run: |
-          npm install
+        run: npm install
 
-      # 7. Runs "npm run test"
       - name: Run Unit Tests
         run: npm run test --if-present
 
-      # 8. Runs "npm run test:coverage"
       - name: Run Code Coverage
         run: npm run test:coverage --if-present
 
-      # 9. Get the 7-character Git commit ID
       - name: Get Short SHA
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      # 10. Authenticate with Docker Hub using your GitHub secrets
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # 11. Builds and deploys your Docker image with a tag containing the Git commit ID
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:bb-${{ steps.vars.outputs.sha_short }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:bb-${{ steps.vars.outputs.sha_short }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:bb:${{ steps.vars.outputs.sha_short }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:bb:${{ steps.vars.outputs.sha_short }}
