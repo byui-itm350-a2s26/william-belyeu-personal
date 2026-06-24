@@ -1,0 +1,27 @@
+describe('Vue Component Methods (addEvent)', () => {
+
+    // A Simple-Test checking the validation logic before the API call
+    test('should not trigger an HTTP POST if the event title is empty or just spaces', () => {
+        // Mocking the 'this' context of your Vue instance
+        const mockContext = {
+            event: { title: '   ', detail: 'Party at the park', date: '2026-06-01' },
+            events: [],
+            $http: {
+                post: jest.fn() // A mock function to track if the API was called
+            }
+        };
+
+        // The isolated addEvent logic from app.js
+        const addEventLogic = function () {
+            if (this.event.title.trim()) {
+                this.$http.post('/api/events', this.event);
+            }
+        };
+
+        // Run the method using our mocked Vue context
+        addEventLogic.call(mockContext);
+
+        // Expect the HTTP post NOT to have been called because the title was invalid
+        expect(mockContext.$http.post).not.toHaveBeenCalled();
+    });
+});
