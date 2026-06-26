@@ -1,6 +1,9 @@
 name: Create Build Pipeline
 
 on:
+  push:
+    branches:
+      - actions-build
   pull_request:
     branches:
       - main
