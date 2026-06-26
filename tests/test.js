@@ -1,6 +1,6 @@
 // 1. Load your code and the data file
-const api = require('./api.js'); 
-const eventsFile = require('./events.js'); 
+const api = require('../backend/api.js'); 
+const eventsFile = require('../backend/events.js'); 
 
 // 2. Inject a test item into your events data so we know exactly what to look for
 eventsFile['test-123'] = { title: 'Pass Fail Test' };
