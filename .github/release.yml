@@ -1,7 +1,10 @@
 name: Terraform Deployment
 
-# This enables the manual trigger button with text box inputs
+# Add a temporary push block right here
 on:
+  push:
+    branches:
+      - feature/terraform-pipeline # Change to match your exact branch name
   workflow_dispatch:
     inputs:
       aws_access_key_id:
