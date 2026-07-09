@@ -38,7 +38,9 @@ jobs:
 
       # 3. Initialize Terraform
       - name: Terraform Init
-        run: terraform init
+        run: |
+          cd $GITHUB_WORKSPACE
+          terraform init
         env:
           AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
           AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
@@ -56,7 +58,9 @@ jobs:
 
       # 5. Run Terraform Apply with Auto-Approve
       - name: Terraform Apply
-        run: terraform apply --auto-approve
+        run: |
+          cd $GITHUB_WORKSPACE
+          terraform apply --auto-approve
         env:
           AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
           AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
