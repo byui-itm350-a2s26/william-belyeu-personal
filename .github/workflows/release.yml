@@ -1,6 +1,5 @@
 name: Terraform Deployment
 
-# Both triggers must sit underneath a single "on:" block
 on:
   push:
     branches:
@@ -24,6 +23,11 @@ jobs:
   terraform:
     name: 'Terraform Run'
     runs-on: ubuntu-latest
+    
+    # This sets the working directory to iac globally for all run commands
+    defaults:
+      run:
+        working-directory: ./iac
 
     steps:
       # 1. Checkout your code
@@ -34,13 +38,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.7.0" # Matches common stable environments
+          terraform_version: "1.7.0"
 
       # 3. Initialize Terraform
       - name: Terraform Init
-        run: |
-          cd $GITHUB_WORKSPACE
-          terraform init
+        run: terraform init
         env:
           AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
           AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
@@ -58,9 +60,7 @@ jobs:
 
       # 5. Run Terraform Apply with Auto-Approve
       - name: Terraform Apply
-        run: |
-          cd $GITHUB_WORKSPACE
-          terraform apply --auto-approve
+        run: terraform apply --auto-approve
         env:
           AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
           AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
