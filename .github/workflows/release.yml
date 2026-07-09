@@ -1,0 +1,68 @@
+name: Terraform Deployment
+
+on:
+  push:
+    branches:
+      - feature/terraform-pipeline
+  workflow_dispatch:
+    inputs:
+      aws_access_key_id:
+        description: 'Paste your AWS Access Key ID'
+        required: true
+        type: string
+      aws_secret_access_key:
+        description: 'Paste your AWS Secret Access Key'
+        required: true
+        type: string
+      aws_session_token:
+        description: 'Paste your AWS Session Token (Learner Lab)'
+        required: true
+        type: string
+
+jobs:
+  terraform:
+    name: 'Terraform Run'
+    runs-on: ubuntu-latest
+    
+    # This sets the working directory to iac globally for all run commands
+    defaults:
+      run:
+        working-directory: ./iac
+
+    steps:
+      # 1. Checkout your code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Set up Terraform CLI on the runner
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0"
+
+# 3. Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+        env:
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
+          AWS_DEFAULT_REGION: us-east-1
+
+      # 4. Run Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
+          AWS_DEFAULT_REGION: us-east-1
+
+      # 5. Run Terraform Apply with Auto-Approve
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
+          AWS_DEFAULT_REGION: us-east-1
