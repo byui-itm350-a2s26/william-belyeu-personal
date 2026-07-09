@@ -1,0 +1,69 @@
+name: Terraform Deployment
+
+# Add a temporary push block right here
+on:
+  push:
+    branches:
+      - feature/terraform-pipeline # Change to match your exact branch name
+  workflow_dispatch:
+    inputs:
+      aws_access_key_id:
+        description: 'Paste your AWS Access Key ID'
+        required: true
+        type: string
+      aws_secret_access_key:
+        description: 'Paste your AWS Secret Access Key'
+        required: true
+        type: string
+      aws_session_token:
+        description: 'Paste your AWS Session Token (Learner Lab)'
+        required: true
+        type: string
+
+jobs:
+  terraform:
+    name: 'Terraform Run'
+    runs-on: ubuntu-latest
+
+    # This fulfills the "Change working directory to iac" requirement for all steps
+    defaults:
+      run:
+        working-directory: ./iac
+
+    steps:
+      # 1. Checkout your code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Set up Terraform CLI on the runner
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0" # Matches common stable environments
+
+      # 3. Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
+          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_DEFAULT_REGION: us-east-1
+
+      # 4. Run Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
+          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_DEFAULT_REGION: us-east-1
+
+      # 5. Run Terraform Apply with Auto-Approve
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
+          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_DEFAULT_REGION: us-east-1
