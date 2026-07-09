@@ -1,17 +1,10 @@
 name: Terraform Deployment
 
-# Add a temporary push block right here
+# Both triggers must sit underneath a single "on:" block
 on:
   push:
     branches:
-      - feature/terraform-pipeline # Change to match your exact branch name
-  workflow_dispatch:
-    inputs:
-      aws_access_key_id:
-...
-
-# This enables the manual trigger button with text box inputs
-on:
+      - feature/terraform-pipeline
   workflow_dispatch:
     inputs:
       aws_access_key_id:
@@ -32,11 +25,6 @@ jobs:
     name: 'Terraform Run'
     runs-on: ubuntu-latest
 
-    # This fulfills the "Change working directory to iac" requirement for all steps
-    defaults:
-      run:
-        working-directory: ./iac
-
     steps:
       # 1. Checkout your code
       - name: Checkout Code
@@ -52,25 +40,25 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
-          AWS_ACCESS_KEY_ID: ASIAQLIKIICZ5TAETSW3
-          AWS_SECRET_ACCESS_KEY: ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B
-          AWS_SESSION_TOKEN: IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk=
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
+          AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk="
           AWS_DEFAULT_REGION: us-east-1
 
       # 4. Run Terraform Plan
       - name: Terraform Plan
         run: terraform plan
         env:
-          AWS_ACCESS_KEY_ID: ASIAQLIKIICZ5TAETSW3
-          AWS_SECRET_ACCESS_KEY: ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B
-          AWS_SESSION_TOKEN: IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk=
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
+          AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk="
           AWS_DEFAULT_REGION: us-east-1
 
       # 5. Run Terraform Apply with Auto-Approve
       - name: Terraform Apply
         run: terraform apply --auto-approve
         env:
-          AWS_ACCESS_KEY_ID: ASIAQLIKIICZ5TAETSW3
-          AWS_SECRET_ACCESS_KEY: ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B
-          AWS_SESSION_TOKEN: IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk=
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZ5TAETSW3"
+          AWS_SECRET_ACCESS_KEY: "ifVzIpBxf63LwEHm3Z5tc3mNRRsjYof17fiTCR+B"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjEMr//////////wEaCXVzLXdlc3QtMiJHMEUCIDQ92zzRLafiZB52mB+q92YpP7tzc6kE0fb/6CfCIBL2AiEA+7W+Jb885L4qVqtw4UcnBBRex7tZwD1KvBlBQ3qKrrcqtAIIk///////////ARAAGgwwMjQxODA3MDM0MTEiDMoPDc5XOnhd2c8AmCqIAjdgv7jYFJtAlSGYvhGiSmZ1a2M1/LeKHfcdogM2NAOxJjMWemx1OzotUx/UI/aOXzLrw+CtiyeCRME0vLdnbCn9nivM+AyJXdofjBpDbUww03XySBHl3iu2sYYm55H9eGCj2C5PzJXzztgYa97gWPTKY6Q+ok4qU/yLWifkQpZ48v8b850heupwDpl+v9n8BoA56AyIEUEUpSDr/JoFWEdliFNrjWr14N5ngNfjmBSPQUPo6bIUpgh1+IAQB1Msg04uGGKABb5Dh8nvud2doqPSqAfOk8paWT1g+sEcBXqu8oXu/yvvesnI3GyEGKK/htOTK+4xFoQhyzsqvhJ2yKsOZ8T3c2FbNjCL/LvSBjqdAad9BcFGOi4rfizsJ7X67hmfYPNzmNQTpvqDrCqnE0DALJviy7wB7Cmo+mS4YRSsmGtYTIOqxNeA9tRfVAke7k8UBPLgBLR13jMtaWfIMtgE4ErsyfHQY49L5lSB1/6DoXLkvrwhB8VkXY8/OZejo3SWr3pCLzLxr4TDYISeh0yB3qaD7FxN8tPQii6rHRIhUaq2lfZmtxhNm4OymHk="
           AWS_DEFAULT_REGION: us-east-1
