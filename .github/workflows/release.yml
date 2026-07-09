@@ -44,25 +44,25 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
-          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
-          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
           AWS_DEFAULT_REGION: us-east-1
 
       # 4. Run Terraform Plan
       - name: Terraform Plan
         run: terraform plan
         env:
-          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
-          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
           AWS_DEFAULT_REGION: us-east-1
 
       # 5. Run Terraform Apply with Auto-Approve
       - name: Terraform Apply
         run: terraform apply --auto-approve
         env:
-          AWS_ACCESS_KEY_ID: ${{ github.event.inputs.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ github.event.inputs.aws_secret_access_key }}
-          AWS_SESSION_TOKEN: ${{ github.event.inputs.aws_session_token }}
+          AWS_ACCESS_KEY_ID: "ASIAQLIKIICZQZ3SPBEP"
+          AWS_SECRET_ACCESS_KEY: "AFCWBUXHN9pK/zBtZvw1X6MFtU6HBGmGd78dOkDE"
+          AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjENn//////////wEaCXVzLXdlc3QtMiJHMEUCIEJQG+bPv9xNcZ4bsWMQYvuRuJLlWFTnCE3Y2P/y9PxdAiEA4mi86PPoaiPSjA/9P5+00BS4YQkV/Oz+Ub01XQoQ14cqtAIIov//////////ARAAGgwwMjQxODA3MDM0MTEiDDrgr9ccRz/MPnmCsiqIAqZubTAOaexAFDS37nmq6CbE5MA9yaD12TbFpypljEQ0YbJR3Mx91BV1bDCbyh4MQhztZ3r+L/RcprWD+N61mdkdeI+utRExvFI+wTOrGYuYqazq2fmi4njoNT8v2AfVKPVUe9kLSVocL37vnH/XTAf1WQ24q/R2FCtWkreQYbmWwJE8C8N+k9K7TVlZx5eeNSWVgMaO4U7aDWQ5Fe6HhpJwcObc2GmoGz4gF0aqE/HdlOrC/oeW46C+KGuVMedANXRDr245cmMfifdemgv9ex/r7MjoLV/YBVHRSi3JReUI/y7cE1nTe0yZuOjkQx6BO/R5HemUWqCH1vXU5Ww+W/QJr4rMfpfMiTCjrL/SBjqdAY6w4gYMypbk/q3TNBSIzGx6bTYrJ6NEhCw2/YVdckInhfpJdevgNxD3FfmJi5JrwHaBSgE9Jbep7107Zk4ED1VplTcqIiZLOlm27ZlCRGTuxyIP2o6fZSlUCSfrsC3W+EcYXKkSDlsmyAuQp1DNHGzt4B6t1KmeYOfBA8xBmXm8tbLVEJ00TxCfwdJValZL2aS39gj4IyE6qBPeIAU="
           AWS_DEFAULT_REGION: us-east-1
